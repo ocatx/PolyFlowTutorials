@@ -1,15 +1,63 @@
 ---
+const projects = [
+  {
+    id: 1,
+    title: "Project One",
+    description: "Short description of what you built and the technologies used.",
+    image: "/images/cfx.png",
+    video: "/videos/Blister1.mp4",
+    liveUrl: "https://your-live-demo.com",
+    githubUrl: "https://github.com/yourusername/project1"
+  },
+];
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Projects</title>
+  <style>
+    body { font-family: system-ui; padding: 2rem; background: #0f0f0f; color: white; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+    .card { background: #1f1f1f; border-radius: 12px; overflow: hidden; }
+    img, video { width: 100%; height: auto; display: block; }
+    .content { padding: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>My Projects</h1>
+  
+  <div class="grid">
+    {projects.map(project => (
+      <div class="card">
+        <img 
+          src={project.image} 
+          alt={project.title}
+          width="600"
+          height="400"
+        />
+        
+        <div class="content">
+          <h2>{project.title}</h2>
+          <p>{project.description}</p>
+          
+          {project.video && (
+            <video controls width="100%">
+              <source src={project.video} type="video/mp4" />
+              Your browser does not support video.
+            </video>
+          )}
+          
+          <div style="margin-top: 1rem;">
+            {project.liveUrl && <a href={project.liveUrl} target="_blank">🔗 Live Demo</a>}
+            {' | '}
+            {project.githubUrl && <a href={project.githubUrl} target="_blank">GitHub</a>}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</body>
 </html>
