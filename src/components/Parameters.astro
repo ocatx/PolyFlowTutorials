@@ -1,69 +1,76 @@
 ---
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'katex-react';
-
-interface Props {
-  title?: string;
-}
-
-const { title = "Simulation Parameters" } = Astro.props;
 ---
 
 <div class="parameters-section">
-  <h2>{title}</h2>
+  <h2>Simulation Parameters</h2>
   
   <div class="params-grid">
     <div class="param-item">
-      <strong>Viscosity (μ):</strong>
-      <InlineMath math="10^5 \, \text{Pa·s}" />
+      <strong>Viscosity (μ):</strong> 
+      <span class="math">10^{5} \, \text{Pa·s}</span>
     </div>
 
     <div class="param-item">
-      <strong>Density (ρ):</strong>
-      <InlineMath math="10^{-3} \, \text{g/mm}^3" />
+      <strong>Density (ρ):</strong> 
+      <span class="math">10^{-3} \, \text{g/mm}^3</span>
     </div>
 
     <div class="param-item">
-      <strong>Initial thickness (h₀):</strong>
-      <InlineMath math="0.35 \, \text{mm}" />
+      <strong>Initial thickness (h_0):</strong> 
+      <span class="math">0.35 \, \text{mm}</span>
     </div>
 
     <div class="param-item">
-      <strong>Pressure (P):</strong>
-      <InlineMath math="10^5 \, \text{Pa}" />
+      <strong>Pressure (P):</strong> 
+      <span class="math">10^{5} \, \text{Pa}</span>
     </div>
 
     <div class="param-item">
-      <strong>Coefficient of permeability (k):</strong>
-      <InlineMath math="5 \times 10^{-12} \, \text{g·mm/s/mm}^2" />
+      <strong>Coefficient of permeability (k):</strong> 
+      <span class="math">5 \times 10^{-12} \, \text{g·mm/s/mm}^2</span>
     </div>
   </div>
 </div>
 
+<script>
+  import katex from 'katex';
+  
+  document.querySelectorAll('.math').forEach(el => {
+    const tex = el.textContent || '';
+    katex.render(tex, el, {
+      throwOnError: false,
+      displayMode: false
+    });
+  });
+</script>
+
 <style>
   .parameters-section {
     margin: 2.5rem 0;
-    padding: 1.5rem;
+    padding: 2rem;
     background: #1a1a1a;
     border-radius: 12px;
+    border: 1px solid #333;
   }
 
   .params-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
   }
 
   .param-item {
     background: #252525;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1.2rem;
+    border-radius: 10px;
+    line-height: 1.6;
   }
 
   strong {
     color: #4fc3f7;
     display: block;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
   }
 </style>
