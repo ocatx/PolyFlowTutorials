@@ -1,49 +1,50 @@
 ---
 import 'katex/dist/katex.min.css';
+import katex from 'katex';
+
+const parameters = [
+  {
+    label: "Viscosity (μ)",
+    formula: "10^{5} \\, \\text{Pa·s}"
+  },
+  {
+    label: "Density (ρ)",
+    formula: "10^{-3} \\, \\text{g/mm}^3"
+  },
+  {
+    label: "Initial thickness (h_0)",
+    formula: "0.35 \\, \\text{mm}"
+  },
+  {
+    label: "Pressure (P)",
+    formula: "10^{5} \\, \\text{Pa}"
+  },
+  {
+    label: "Coefficient of permeability (k)",
+    formula: "5 \\times 10^{-12} \\, \\text{g·mm/s/mm}^2"
+  },
+];
 ---
 
 <div class="parameters-section">
   <h2>Simulation Parameters</h2>
   
   <div class="params-grid">
-    <div class="param-item">
-      <strong>Viscosity (μ):</strong> 
-      <span class="math">10^{5} \, \text{Pa·s}</span>
-    </div>
-
-    <div class="param-item">
-      <strong>Density (ρ):</strong> 
-      <span class="math">10^{-3} \, \text{g/mm}^3</span>
-    </div>
-
-    <div class="param-item">
-      <strong>Initial thickness (h_0):</strong> 
-      <span class="math">0.35 \, \text{mm}</span>
-    </div>
-
-    <div class="param-item">
-      <strong>Pressure (P):</strong> 
-      <span class="math">10^{5} \, \text{Pa}</span>
-    </div>
-
-    <div class="param-item">
-      <strong>Coefficient of permeability (k):</strong> 
-      <span class="math">5 \times 10^{-12} \, \text{g·mm/s/mm}^2</span>
-    </div>
+    {parameters.map(param => {
+      const html = katex.renderToString(param.formula, {
+        throwOnError: false,
+        displayMode: false
+      });
+      
+      return (
+        <div class="param-item">
+          <strong>{param.label}:</strong>
+          <span set:html={html} />
+        </div>
+      );
+    })}
   </div>
 </div>
-
-<script>
-  import katex from 'katex';
-  
-  document.querySelectorAll('.math').forEach(el => {
-    const tex = el.textContent || '';
-    katex.render(tex, el, {
-      throwOnError: false,
-      displayMode: false
-    });
-  });
-</script>
 
 <style>
   .parameters-section {
