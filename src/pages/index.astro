@@ -1,5 +1,5 @@
 ---
-import Parameters from '../components/Parameters.astro';
+import ProjectDetails from '../components/ProjectDetails.astro';
 const projects = [
   {
     id: 1,
@@ -36,7 +36,7 @@ const projects = [
         <div class="content">
           <h2>{project.title}</h2>
           <p>{project.description}</p>
-		  <Parameters title="Key Simulation Parameters" />
+		  <ProjectDetails title="PolyFlow - Simulation Setup" />
           <img 
 		    src={`${import.meta.env.BASE_URL}/images/cfx.png`} 
 		    alt="Project 1" 

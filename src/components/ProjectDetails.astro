@@ -1,0 +1,125 @@
+---
+import 'katex/dist/katex.min.css';
+import katex from 'katex';
+
+const { title = "Project Details" } = Astro.props;
+
+// Simulation Parameters
+const parameters = [
+  { label: "Viscosity (μ)", value: "10^{5} \\, \\text{Pa·s}" },
+  { label: "Density (ρ)", value: "10^{-3} \\, \\text{g/mm}^3" },
+  { label: "Initial thickness (h_0)", value: "0.35 \\, \\text{mm}" },
+  { label: "Pressure (P)", value: "10^{5} \\, \\text{Pa}" },
+  { label: "Coefficient of permeability (k)", value: "5 \\times 10^{-12} \\, \\text{g·mm/s/mm}^2" },
+  // Add more parameters here easily
+];
+
+// Governing Equations
+const equations = [
+  {
+    name: "Continuity Equation",
+    formula: "\\nabla \\cdot \\mathbf{u} = 0"
+  },
+  {
+    name: "Momentum Equation (Navier-Stokes)",
+    formula: "\\rho \\left( \\frac{\\partial \\mathbf{u}}{\\partial t} + \\mathbf{u} \\cdot \\nabla \\mathbf{u} \\right) = -\\nabla p + \\mu \\nabla^2 \\mathbf{u} + \\mathbf{f}"
+  },
+  {
+    name: "Constitutive Relation",
+    formula: "\\boldsymbol{\\tau} = \\mu \\left( \\nabla \\mathbf{u} + (\\nabla \\mathbf{u})^T \\right)"
+  },
+  // Add more equations as needed
+];
+---
+
+<div class="details-section">
+  <h2>{title}</h2>
+
+  <!-- Parameters Table -->
+  <h3>Simulation Parameters</h3>
+  <table class="params-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {parameters.map(param => {
+        const html = katex.renderToString(param.value, {
+          throwOnError: false,
+          displayMode: false
+        });
+        return (
+          <tr>
+            <td><strong>{param.label}</strong></td>
+            <td><span set:html={html} /></td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+
+  <!-- Governing Equations -->
+  <h3>Governing Equations</h3>
+  <div class="equations">
+    {equations.map(eq => {
+      const html = katex.renderToString(eq.formula, {
+        throwOnError: false,
+        displayMode: true
+      });
+      return (
+        <div class="equation-item">
+          <strong>{eq.name}</strong>
+          <div class="math-block" set:html={html} />
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .details-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #333;
+  }
+
+  .params-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    background: #252525;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .params-table th, .params-table td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  .params-table th {
+    background: #2a2a2a;
+    color: #4fc3f7;
+  }
+
+  .equation-item {
+    background: #252525;
+    padding: 1.4rem;
+    margin-bottom: 1.2rem;
+    border-radius: 10px;
+  }
+
+  .math-block {
+    margin-top: 0.8rem;
+  }
+
+  h3 {
+    margin-top: 2rem;
+    color: #4fc3f7;
+  }
+</style>
