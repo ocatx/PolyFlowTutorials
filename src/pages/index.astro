@@ -12,6 +12,10 @@ const projects = [
 ];
 ---
 
+---
+import Parameters from '../components/Parameters.astro';
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +39,7 @@ const projects = [
         <div class="content">
           <h2>{project.title}</h2>
           <p>{project.description}</p>
-		  
+		  <Parameters title="Key Simulation Parameters" />
           <img 
 		    src={`${import.meta.env.BASE_URL}/images/cfx.png`} 
 		    alt="Project 1" 
